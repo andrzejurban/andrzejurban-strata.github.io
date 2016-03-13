@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<script src="angular.min.js"></script>
+
+<body>
+
+    <div ng-app="myApp" ng-controller="customersCtrl" class="main">
+
+        <h1>Lista pokoi</h1>
+
+        <table>
+            <tr>
+                <th>Numer pokoju</th>
+                <th>Stan pokoju</th>
+                <th>Zwieksz</th>
+                <th>Temperatura aktualna</th>
+                <th>Temperatura zadana</th>
+                <th>Zmniejsz</th>
+            </tr>
+            <tr ng-repeat="x in rooms | orderBy : 'roomNumber'">
+                <td>{{ x.roomNumber }}</td>
+                <td>
+                    <select ng-model="x.roomStatus">
+                        <option value="WOLNY">WOLNY</option>
+                        <option value="ZAJETY">ZAJETY</option>
+                    </select>
+                </td>
+                <td>
+                    <button ng-click="increaseTemperature(x)"> + </button>
+                </td>
+                <td>{{ x.temperature }}</td>
+                <td>{{ x.temperatureToBe }}</td>
+                <td>
+                    <button ng-click="decreaseTemperature(x)"> - </button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('customersCtrl', function ($scope, $http) {
+            $scope.rooms = [{
+                roomNumber: "1",
+                roomStatus: "WOLNY",
+                temperature: "23.8",
+                temperatureToBe: "26.0"
+            }, {
+                roomNumber: "2",
+                roomStatus: "WOLNY",
+                temperature: "27.2",
+                temperatureToBe: "26.0"
+            }, {
+                roomNumber: "3",
+                roomStatus: "ZAJETY",
+                temperature: "15.0",
+                temperatureToBe: "26.0"
+            }];
+            
+            $scope.increaseTemperature = function(room) {
+                room.temperatureToBe = new Number(room.temperatureToBe) + 0.5;
+            }
+            $scope.decreaseTemperature = function(room) {
+                room.temperatureToBe = new Number(room.temperatureToBe) - 0.5;
+            };
+            
+        });
+    </script>
+
+</body>
+
+</html>
