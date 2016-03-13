@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<!-- AWP_In_Variable Name='"temperatura_1"' -->
+<!-- AWP_In_Variable Name='"temperatura_2"' -->
+<!-- AWP_In_Variable Name='"temperatura_3"' -->
+    
 <head>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -10,7 +14,27 @@
     <div ng-app="myApp" ng-controller="customersCtrl" class="main">
 
         <h1>Lista pokoi</h1>
-
+        
+        <table>
+            <tr>
+                <th>Pokoj numer</th>
+                <th>Temperatura</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>:="temperatura_1"</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>:="temperatura_2"</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>:="temperatura_3"</td>
+            </tr>
+            
+        </table>
+        <br/>
         <table>
             <tr>
                 <th>Numer pokoju</th>
