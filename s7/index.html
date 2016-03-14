@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
-<!-- AWP_In_Variable Name='"temperatura_1"' -->
-<!-- AWP_In_Variable Name='"temperatura_2"' -->
-<!-- AWP_In_Variable Name='"temperatura_3"' -->
+<!-- AWP_In_Variable Name='"DB".TEMPAKT[1]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPAKT[2]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPAKT[3]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPAKT[4]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPAKT[5]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPAKT[6]' -->
+    
+<!-- AWP_In_Variable Name='"DB".TEMPZAD[1]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPZAD[2]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPZAD[3]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPZAD[4]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPZAD[5]' -->
+<!-- AWP_In_Variable Name='"DB".TEMPZAD[6]' -->
     
 <head>
     <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Refresh" content="10">
 </head>
 <script src="angular.min.js"></script>
 
@@ -15,62 +26,26 @@
 
         <h1>Lista pokoi</h1>
         
-        <table>
-            <tr>
-                <th>Pokoj numer</th>
-                <th>Temperatura</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>:="temperatura_1"</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>:="temperatura_2"</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>:="temperatura_3"</td>
-            </tr>
-            
-        </table>
-        
-        <form action="">
-            <input type="submit" value="Zmien temperature 1">
-            <input type="hidden" value="111" name='"temperatura_1"'>
-        </form>
-        <form action="">
-            <input type="submit" value="Zmien temperature 2">
-            <input type="hidden" value="222" name='"temperatura_2"'>
-        </form>
-        <form action="">
-            <input type="submit" value="Zmien temperature 3">
-            <input type="hidden" value="333" name='"temperatura_3"'>
-        </form>
-        
         <br/>
         <table>
             <tr>
                 <th>Numer pokoju</th>
-                <th>Stan pokoju</th>
-                <th>Zwieksz</th>
+                <th>Zajęty</th>
                 <th>Temperatura aktualna</th>
                 <th>Temperatura zadana</th>
+                <th>Zwieksz</th>
                 <th>Zmniejsz</th>
             </tr>
             <tr ng-repeat="x in rooms | orderBy : 'roomNumber'">
-                <td>{{ x.roomNumber }}</td>
-                <td>
-                    <select ng-model="x.roomStatus">
-                        <option value="WOLNY">WOLNY</option>
-                        <option value="ZAJETY">ZAJETY</option>
-                    </select>
-                </td>
-                <td>
-                    <button ng-click="increaseTemperature(x)"> + </button>
+                <td>{{ $index + 1 }}</td>
+                <td class="checkbox-bg">
+                    <input type="checkbox" ng-model="x.roomState" ng-click="check(x, $index)">
                 </td>
                 <td>{{ x.temperature }}</td>
                 <td>{{ x.temperatureToBe }}</td>
+                <td>
+                    <button ng-click="increaseTemperature(x)"> + </button>
+                </td>
                 <td>
                     <button ng-click="decreaseTemperature(x)"> - </button>
                 </td>
@@ -82,28 +57,44 @@
     <script>
         var app = angular.module('myApp', []);
         app.controller('customersCtrl', function ($scope, $http) {
-            $scope.rooms = [{
-                roomNumber: "1",
-                roomStatus: "WOLNY",
-                temperature: "23.8",
-                temperatureToBe: "26.0"
-            }, {
-                roomNumber: "2",
-                roomStatus: "WOLNY",
-                temperature: "27.2",
-                temperatureToBe: "26.0"
-            }, {
-                roomNumber: "3",
-                roomStatus: "ZAJETY",
-                temperature: "15.0",
-                temperatureToBe: "26.0"
-            }];
+            $scope.rooms = [
+            {
+                roomStatus: ':="DB".STANPOK[1]:',
+                temperature: ':="DB".TEMPAKT[1]:',
+                temperatureToBe: ':="DB".TEMPZAD[1]:'
+            },
+            {
+                roomStatus: ':="DB".STANPOK[2]:',
+                temperature: ':="DB".TEMPAKT[2]:',
+                temperatureToBe: ':="DB".TEMPZAD[2]:'
+            },{
+                roomStatus: ':="DB".STANPOK[3]:',
+                temperature: ':="DB".TEMPAKT[3]:',
+                temperatureToBe: '"DB".TEMPZAD[3]:'
+            },{
+                roomStatus: ':="DB".STANPOK[4];',
+                temperature: ':="DB".TEMPAKT[4]:',
+                temperatureToBe: ':="DB".TEMPZAD[4]:'
+            },{
+                roomStatus: ':="DB".STANPOK[5]:',
+                temperature: ':="DB".TEMPAKT[5]:',
+                temperatureToBe: ':="DB".TEMPZAD[5]:'
+            },{
+                roomStatus: ':="DB".STANPOK[6]:',
+                temperature: ':="DB".TEMPAKT[6]:',
+                temperatureToBe: ':="DB".TEMPZAD[6]:'
+            }
+                           
+            ];
             
             $scope.increaseTemperature = function(room) {
                 room.temperatureToBe = new Number(room.temperatureToBe) + 0.5;
             }
             $scope.decreaseTemperature = function(room) {
                 room.temperatureToBe = new Number(room.temperatureToBe) - 0.5;
+            };
+            $scope.check = function(room, index) {
+                angular.element(document.getElementsByClassName('checkbox-bg')[index]).addClass("green-bg");
             };
             
         });

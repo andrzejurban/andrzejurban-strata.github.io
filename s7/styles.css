@@ -30,7 +30,7 @@ th {
 td {
     background: #FAFAFA;
     text-align: center;
-    font-size: 25px;
+    font-size: 15px;
 }
 
 table,
@@ -50,7 +50,15 @@ table tr:nth-child(even) {
 }
 
 button {
-    width: 100px;
-    height: 75px;
-    font-size: 45px;
+    width: 50px;
+    font-size: 30px;
+}
+
+input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+}
+
+.green-bg {
+    background-color: green;
 }
